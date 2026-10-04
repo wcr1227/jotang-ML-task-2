@@ -1,3 +1,4 @@
+# 做valid和same的对比实验
 import numpy as np
 from PIL import Image
 

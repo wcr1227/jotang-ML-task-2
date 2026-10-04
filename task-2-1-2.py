@@ -1,48 +1,60 @@
+# 申明：代码大部分由ai编写，疑问与注释由本人编写（看不懂的地方问ai）
 import numpy as np
 from PIL import Image
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt # 绘图库，用来展示原图、卷积后的图片，方便对比
 
 
 # ==================== 核心：灰度图二维卷积 ====================
 
 def conv2d_gray(image, kernel, padding=0, stride=1):
     """
-    对灰度图进行二维卷积（核心手写实现）
+    对灰度图进行二维卷积
 
     参数：
-        image:  2D numpy array，形状 (H, W)
-        kernel: 2D numpy array，形状 (kh, kw)
-        padding: int，边缘补 0 的层数
-        stride:  int，滑动步长
+        image:  2D numpy array,形状 (H, W) 输入灰度图像
+        kernel: 2D numpy array,形状 (kh, kw) 卷积核
+        padding: int, 图片四周补充0像素
+        stride:  int, 滑动步长，卷积核每次向右/向下移动1个像素
 
     返回：
-        output: 2D numpy array，卷积结果
+        output: 2D numpy array,卷积结果
     """
     # 确保是浮点数，避免整数溢出
     image = image.astype(np.float32)
     kernel = kernel.astype(np.float32)
 
-    h, w = image.shape
-    kh, kw = kernel.shape
+    h, w = image.shape # 灰度图形状
+    kh, kw = kernel.shape # 卷积核形状
 
     # 计算输出尺寸
-    out_h = (h + 2 * padding - kh) // stride + 1
-    out_w = (w + 2 * padding - kw) // stride + 1
+
+    # 公式看不懂(呜呜)
+    # 解答：什么时候我们才需要Padding？
+    # 不想让特征图越卷积越小（深层网络，反复卷积会把图缩到很小，丢失信息）
+    out_h = (h + 2 * padding - kh) // stride + 1 # 卷积之后输出图片的高度
+    out_w = (w + 2 * padding - kw) // stride + 1 # 卷积之后输出图片的宽度
 
     # 如果尺寸不合法，报错
     if out_h <= 0 or out_w <= 0:
         raise ValueError(
-            f"输出尺寸不合法：out_h={out_h}, out_w={out_w}。"
-            f"请检查 padding/stride/kernel 大小。"
+            f"输出尺寸不合法:out_h={out_h}, out_w={out_w}"
+            f"请检查 padding/stride/kernel 大小"
         )
 
     # 边缘填充
+    # 在图片四周补一圈0（黑色像素）不加padding的话，卷积核扫到图片边缘的时候，会不够位置，输出图片会变小
     if padding > 0:
         padded = np.pad(image, padding, mode='constant', constant_values=0)
     else:
         padded = image
 
+    # 不填充的话（valid）,传入参数padding=0,进入else
+
+    
+
     # 初始化输出
+    # 这是在干嘛？
+    # 提前创建一块空的矩阵（全部元素初始都是0），用来存放卷积计算完之后的结果
     output = np.zeros((out_h, out_w), dtype=np.float32)
 
     # 核心卷积：双重循环
@@ -70,24 +82,24 @@ def conv2d_rgb(image, kernel, padding=0, stride=1):
     对 RGB 图进行二维卷积（对每个通道分别卷积）
 
     参数：
-        image:  3D numpy array，形状 (H, W, 3)
-        kernel: 2D numpy array，形状 (kh, kw)
+        image:  3D numpy array,形状 (H, W, 3)
+        kernel: 2D numpy array,形状 (kh, kw)
         padding: int
         stride:  int
 
     返回：
-        output: 3D numpy array，形状 (out_h, out_w, 3)
+        output: 3D numpy array,形状 (out_h, out_w, 3)
     """
     h, w, c = image.shape
     if c != 3:
         raise ValueError(f"期望 3 通道 RGB 图，实际得到 {c} 通道")
 
-    channels = []
+    channels = [] # 创建空列表，用来保存每一个通道卷积后的结果
     for ch in range(c):
-        result = conv2d_gray(image[:, :, ch], kernel, padding, stride)
-        channels.append(result)
+        result = conv2d_gray(image[:, :, ch], kernel, padding, stride) # 调用我们之前写好的灰度卷积函数
+        channels.append(result) # 把当前通道卷积结果放进列表
 
-    # 沿最后一个维度堆叠，得到 (out_h, out_w, 3)
+    # 通道合并
     return np.stack(channels, axis=-1)
 
 
@@ -119,7 +131,7 @@ def conv2d(image, kernel, padding=0, stride=1):
 
 
 # ==================== 卷积核定义 ====================
-
+# 定义了不同作用的卷积核
 def mean_kernel(size=3):
     """均值模糊核"""
     return np.ones((size, size), dtype=np.float32) / (size * size)
@@ -161,10 +173,11 @@ def sobel_y_kernel():
 
 
 # ==================== 结果处理与保存 ====================
-
+# 这是在干嘛？
+# 解答：把卷积输出的数值，转换成合法图片像素
 def normalize_to_uint8(result):
     """
-    把卷积结果归一化到 0~255，转成 uint8，便于保存和显示。
+    把卷积结果归一化到 0~255,转成 uint8,便于保存和显示
     支持 2D 灰度图和 3D RGB 图。
     """
     result = result.astype(np.float32)
@@ -201,18 +214,21 @@ def clip_to_uint8(result):
 
 
 # ==================== 主流程演示 ====================
+# ai写这段代码是干啥用的
+# 调用前面的工具，把整套实验跑起来
 
 def demo(image_path="lane.jpg"):
     """演示灰度图和 RGB 图的卷积"""
     # 1. 读取图片
-    img = Image.open(image_path)
+    img = Image.open(image_path) # 这里可以替换图片路径
     arr = np.array(img)
-    print(f"原图：shape={arr.shape}, dtype={arr.dtype}")
+    print(f"原图:shape={arr.shape}, dtype={arr.dtype}")
 
     gray = np.array(img.convert("L"))
-    print(f"灰度图：shape={gray.shape}, dtype={gray.dtype}")
+    print(f"灰度图:shape={gray.shape}, dtype={gray.dtype}")
 
     # 2. 定义卷积核
+    # 调用卷积核函数，函数实例化
     k_mean = mean_kernel(3)
     k_gauss = gaussian_kernel(5, sigma=1.0)
     k_sharp = sharpen_kernel()
@@ -227,6 +243,9 @@ def demo(image_path="lane.jpg"):
     gray_sy = conv2d(gray, k_sy, padding=1, stride=1)
 
     # 边缘合成
+    # 疑问：这是干嘛用的？
+    # Sobel-X找竖边，Sobel-Y找横边
+    # 这行代码把两者合并，算出图片里所有方向的边缘强弱，得到一张完整的边缘图（其实还是不太明白 呜呜）
     gray_edge = np.sqrt(gray_sx ** 2 + gray_sy ** 2)
 
     print(f"\n灰度卷积输出形状：{gray_mean.shape}")
