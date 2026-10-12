@@ -1,4 +1,4 @@
-# 申明：代码由ai编写，疑问与注释由本人书写
+# 申明：代码由ai辅助编写，疑问与注释由本人书写
 # Pillow 读取图片文件
 from PIL import Image
 import numpy as np
