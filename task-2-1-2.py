@@ -2,7 +2,8 @@
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt # 绘图库，用来展示原图、卷积后的图片，方便对比
-
+plt.rcParams["font.sans-serif"] = ["SimHei"]  # 设置黑体，支持中文
+plt.rcParams["axes.unicode_minus"] = False    # 解决负号显示异常
 
 # ==================== 核心：灰度图二维卷积 ====================
 
@@ -220,7 +221,7 @@ def clip_to_uint8(result):
 def demo(image_path="lane.jpg"):
     """演示灰度图和 RGB 图的卷积"""
     # 1. 读取图片
-    img = Image.open(image_path) # 这里可以替换图片路径
+    img = Image.open(image_path).convert("RGB") # 这里可以替换图片路径 转换为三通道，去除透明通道
     arr = np.array(img)
     print(f"原图:shape={arr.shape}, dtype={arr.dtype}")
 
@@ -298,4 +299,4 @@ def demo(image_path="lane.jpg"):
 
 
 if __name__ == "__main__":
-    demo("lane.jpg")
+    demo("task-2-1.png")
