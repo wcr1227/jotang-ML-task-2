@@ -1,4 +1,4 @@
-# 申明：代码大部分由ai编写，疑问与注释由本人编写（看不懂的地方问ai）
+# 申明：代码由ai辅助编写，疑问与注释由本人编写（看不懂的地方问ai）
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt # 绘图库，用来展示原图、卷积后的图片，方便对比
