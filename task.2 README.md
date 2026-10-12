@@ -31,7 +31,10 @@ task-2-2.py
 ### 3.记录学习与回答问题的答案
 
 task-2-note.md
-### 4.不同卷积核生成的图片以及任务一结果图片conv_results.png
+### 4.图片
+不同卷积核生成的图片 gray_edge.png  gray_mean.png rgb_sharp.png
+task-2-1-1.py 结果图片 task-2-1-1result.png
+task-2-1-2.py 结果图片 task-2-1-2conv_results.png
 
 ### 5.README
 
