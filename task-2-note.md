@@ -31,7 +31,7 @@
 
 ### 2.使用上面这张图片，用 Pillow 或其他图像读取工具将它转换为 NumPy 数组和 PyTorch Tensor。打印他的的 `shape`、`dtype`、最大值和最小值，再打印一个像素的 RGB 数值。说明每个维度和数值分别表示什么，以及 NumPy/Pillow 常见的 `HWC` 与 PyTorch 常见的 `CHW` 排列有什么区别
 
-![task-2-1result](../../Code/Jotang-ml-task2/task-2-1result.png)
+![代码运行截图](task-2-1result.png)
 
 
 
