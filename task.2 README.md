@@ -14,7 +14,7 @@ fashion_mnist_cnn.ipynb
 
 cifar10_cnn_teaching_case.ipynb
 
-### 2.完成task.2的代码(ai辅助)
+### 2.完成task.2的代码
 
 task-2-1-1.py
 
@@ -31,8 +31,9 @@ task-2-2.py
 ### 3.记录学习与回答问题的答案
 
 task-2-note.md
+### 4.不同卷积核生成的图片以及任务一结果图片conv_results.png
 
-### 4.README
+### 5.README
 
 
 
