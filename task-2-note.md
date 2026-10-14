@@ -58,8 +58,10 @@
 
 ## 3.了解二维卷积的基本过程。用自己的话解释：卷积核是什么？它在图片上怎样移动？每到一个位置进行了什么计算？
 
-https://blog.csdn.net/xvshu/article/details/81302441
-这个链接的作者写得挺清楚详细
+https://blog.csdn.net/xvshu/article/details/81302441\
+这个链接的作者写得挺清楚详细\
+https://www.bilibili.com/video/BV1cVNmeMEua/?spm_id_from=333.337.search-card.all.click&vd_source=88fa49fbb8dd0249c4ac667b1ad83649\
+b站上的一个不错的卷积动画
 
 **卷积**：使用一个小的滤波器（**卷积核**），在图像上滑动，在每个位置**提取局部特征**
 
