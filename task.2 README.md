@@ -20,21 +20,25 @@ task-2-1-1.py
 
 task-2-1-2.py
 
-
-
 task-2-1-3.py
 
 task-2-1-4.py
 
-task-2-2.py
+task-2-2 有新旧两个版本 original new(优化修改最终版) 以及新版的一个补充脚本(task-2-2make_small_data) 
+
+task-2-2-new 运行结果 task-2-2result.md
+
+task-2-2 猫狗分类数据集 archive
 
 ### 3.记录学习与回答问题的答案
 
 task-2-note.md
+
 ### 4.图片
-不同卷积核生成的图片 gray_edge.png  gray_mean.png rgb_sharp.png
-task-2-1-1.py 结果图片 task-2-1-1result.png
-task-2-1-2.py 结果图片 task-2-1-2conv_results.png
+不同卷积核生成的图片 gray_edge.png  gray_mean.png rgb_sharp.png\
+task-2-1-1.py 结果图片 task-2-1-1result.png\
+task-2-1-2.py 结果图片 task-2-1-2conv_results.png\
+task-2-2 结果图片 outputs
 
 ### 5.README
 
